@@ -21,8 +21,14 @@ const (
     INT = "INT"     //3, 234, integers
 
     // Operators
-    ASSIGN = "="
-    PLUS = "+"
+    ASSIGN   = "="
+    PLUS     = "+"
+    MINUS    = "-"
+    BANG     = "!"
+    ASTERISK = "*"
+    SLASH    = "/"
+    LT       = "<"
+    GT       = ">"
 
     // Delimiters
     COMMA = ","
