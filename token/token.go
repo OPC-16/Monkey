@@ -19,11 +19,11 @@ var keywords = map[string]TokenType {
 
 const (
     ILLEGAL = "ILLEGAL"
-    EOF = "EOF"
+    EOF     = "EOF"
 
     //Identifiers + literals
     IDENT = "IDENT"  // add, foobar, x, y, ...
-    INT = "INT"     //3, 234, integers
+    INT   = "INT"     //3, 234, integers
 
     // Operators
     ASSIGN   = "="
@@ -36,7 +36,7 @@ const (
     GT       = ">"
 
     // Delimiters
-    COMMA = ","
+    COMMA     = ","
     SEMICOLON = ";"
 
     LPAREN = "("
@@ -44,14 +44,17 @@ const (
     LBRACE = "{"
     RBRACE = "}"
 
+    EQ     = "=="
+    NOT_EQ = "!="
+
     // Keywords
     FUNCTION = "FUNCTION"
-    LET = "LET"
-    IF = "if"
-    ELSE = "else"
-    TRUE = "true"
-    FALSE = "false"
-    RETURN = "return"
+    LET      = "LET"
+    IF       = "if"
+    ELSE     = "else"
+    TRUE     = "true"
+    FALSE    = "false"
+    RETURN   = "return"
 )
 
 // checks the keywords table to see whether the given identifier is in fact a keyword.
