@@ -1,21 +1,27 @@
 package parser
 
 import (
+    "fmt"
+
 	"github.com/OPC-16/Monkey/ast"
 	"github.com/OPC-16/Monkey/lexer"
 	"github.com/OPC-16/Monkey/token"
 )
 
 type Parser struct {
-    l *lexer.Lexer
+    l         *lexer.Lexer
 
-    curToken token.Token
+    curToken  token.Token
     peekToken token.Token
+    errors    []string
 }
 
 // returns an instance of Parser with supplied lexer
 func New(l *lexer.Lexer) *Parser {
-    p := &Parser{l: l}
+    p := &Parser{
+        l: l,
+        errors: []string{},
+    }
 
     // read two tokens, so curToken and peekToken are both set
     p.nextToken()
@@ -28,6 +34,17 @@ func New(l *lexer.Lexer) *Parser {
 func (p *Parser) nextToken() {
     p.curToken = p.peekToken
     p.peekToken = p.l.NextToken()
+}
+
+// returns the slice of errors
+func (p *Parser) Errors() []string {
+    return p.errors
+}
+
+// adds new error in errors slice
+func (p *Parser) peekError(t token.TokenType) {
+    msg := fmt.Sprintf("expected next token to be %s, got %s instead", t, p.peekToken.Type)
+    p.errors = append(p.errors, msg)
 }
 
 func (p *Parser) ParseProgram() *ast.Program {
@@ -88,6 +105,7 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
         p.nextToken()
         return true
     } else {
+        p.peekError(t)
         return false
     }
 }
