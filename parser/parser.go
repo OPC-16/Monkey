@@ -30,7 +30,7 @@ func New(l *lexer.Lexer) *Parser {
     return p
 }
 
-// helper method that advances both curToken and peekToken
+// helper method that advances both curToken and peekToken while reading next token
 func (p *Parser) nextToken() {
     p.curToken = p.peekToken
     p.peekToken = p.l.NextToken()
