@@ -8,6 +8,40 @@ import (
 	"github.com/OPC-16/Monkey/lexer"
 )
 
+func TestBooleanExpression(t *testing.T) {
+    tests := []struct {
+        input           string
+        expectedBoolean bool
+    } {
+        {"false;", false},
+        {"true;", true},
+    }
+
+    for _, tt := range tests {
+        l := lexer.New(tt.input)
+        p := New(l)
+        program := p.ParseProgram()
+        checkParserErrors(t, p)
+
+        if len(program.Statements) != 1 {
+            t.Fatalf("program does not have enought statements. got=%d", len(program.Statements))
+        }
+
+        stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+        if !ok {
+            t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
+        }
+
+        boolean, ok := stmt.Expression.(*ast.Boolean)
+        if !ok {
+            t.Fatalf("exp is not ast.Boolean. got=%T", stmt.Expression)
+        }
+        if boolean.Value != tt.expectedBoolean {
+            t.Errorf("boolean.Value is not %t. got=%t", tt.expectedBoolean, boolean.Value)
+        }
+    }
+}
+
 func TestOperatorPrecedenceParsing(t *testing.T) {
     infixTests := []struct {
         input    string
