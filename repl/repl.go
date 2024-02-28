@@ -7,6 +7,7 @@ import (
 
 	"github.com/OPC-16/Monkey/lexer"
 	"github.com/OPC-16/Monkey/parser"
+	"github.com/OPC-16/Monkey/evaluator"
 )
 
 const PROMPT = "[>>] "
@@ -44,8 +45,11 @@ func Start(in io.Reader, out io.Writer) {
             continue
         }
 
-        io.WriteString(out, program.String())
-        io.WriteString(out, "\n")
+        evaluated := evaluator.Eval(program)
+        if evaluated != nil {
+            io.WriteString(out, evaluated.Inspect())
+            io.WriteString(out, "\n")
+        }
     }
 }
 
