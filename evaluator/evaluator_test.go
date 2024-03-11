@@ -8,6 +8,28 @@ import (
 	"github.com/OPC-16/Monkey/parser"
 )
 
+func TestFunctionObject(t *testing.T) {
+    input := "fn(x) { x + 2; };"
+    evaluated := testEval(input)
+    fn, ok := evaluated.(*object.Function)
+    if !ok {
+        t.Fatalf("object is not a Function. got=%T (%+v)", evaluated, evaluated)
+    }
+
+    if len(fn.Parameters) != 1 {
+        t.Fatalf("function has wrong parameters. Parameters=%+v", fn.Parameters)
+    }
+
+    if fn.Parameters[0].String() != "x" {
+        t.Fatalf("parameter is not 'x'. got=%q", fn.Parameters[0])
+    }
+
+    expectedBody := "(x + 2)"
+    if fn.Body.String() != expectedBody {
+        t.Fatalf("body is not %q. got=%q", expectedBody, fn.Body.String())
+    }
+}
+
 func TestLetStatements(t *testing.T) {
     tests := []struct {
         input    string
