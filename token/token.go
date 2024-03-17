@@ -55,6 +55,9 @@ const (
     TRUE     = "true"
     FALSE    = "false"
     RETURN   = "return"
+
+    // String
+    STRING   = "STRING"
 )
 
 // checks the keywords table to see whether the given identifier is in fact a keyword.
